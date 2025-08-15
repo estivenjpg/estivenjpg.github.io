@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>¡Feliz Cumpleaños!</title>
+  <style>
+    /* Estilos CSS */
+    :root{
+      --bg: linear-gradient(135deg,#fef6e4 0%, #fff6fb 50%, #e8faff 100%);
+      --accent: #ff6b6b;
+      --accent2: #ffd166;
+      --text: #2b2b2b;
+    }
+    html,body{height:100%;margin:0;font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;background:var(--bg);color:var(--text)}
+    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:30px;box-sizing:border-box;}
+    .card{width:min(950px,96%);background:rgba(255,255,255,0.9);border-radius:18px;box-shadow:0 12px 40px rgba(20,30,60,0.12);overflow:hidden;position:relative;padding:28px;}
+    header{display:flex;gap:20px;align-items:center;}
+    .title{font-size:clamp(28px,4.2vw,46px);font-weight:800;letter-spacing:-0.02em;display:flex;flex-direction:column;line-height:1;}
+    .title small{font-weight:600;font-size:0.45em;color:#7a7a7a;margin-top:6px}
+    .balloons{position:absolute;inset:0;pointer-events:none;}
+    .balloon{position:absolute;bottom:-10%;transform-origin:50% 50%;animation: float 6s ease-in-out infinite;opacity:0.95;}
+    .balloon:nth-child(1){left:6%; animation-duration:5.8s}
+    .balloon:nth-child(2){left:16%; animation-duration:6.4s; animation-delay:0.3s}
+    .balloon:nth-child(3){right:10%; animation-duration:5.6s; animation-delay:0.6s}
+    .balloon:nth-child(4){right:18%; animation-duration:7s; animation-delay:0.2s}
+    .balloon svg{width:70px;height:auto;display:block}
+    @keyframes float{0%{transform: translateY(0) rotate(-3deg)}50%{transform: translateY(-40px) rotate(6deg)}100%{transform: translateY(0) rotate(-3deg)}}
+    .content{display:flex;gap:24px;align-items:center;flex-wrap:wrap; margin-top:18px;}
+    .left{flex:1 1 380px;padding:18px;}
+    .right{flex:1 1 380px;padding:18px;display:flex;align-items:center;justify-content:center;}
+    .cake{width:320px; max-width:90%;text-align:center;}
+    .cake .tier{margin:0 auto;background:linear-gradient(180deg,#fff 0%, #ffeeda 100%);border-radius:12px;box-shadow:0 6px 18px rgba(20,30,50,0.08);height:60px;width:260px;position:relative;}
+    .cake .tier.top{height:46px;width:200px;margin-bottom:-10px}
+    .frost{position:absolute;left:0;right:0;top:6px;height:18px;background:linear-gradient(90deg,var(--accent2),#fff);border-radius:8px 8px 0 0;}
+    .sprinkles{position:absolute;left:12px;right:12px;top:10px;height:6px;background-image: linear-gradient(90deg, transparent 10%, rgba(0,0,0,0.04) 10%);background-size:6px 6px;opacity:0.6;border-radius:4px;}
+    .candles{display:flex;gap:8px;justify-content:center;margin-top:10px}
+    .candle{width:10px;height:28px;border-radius:3px;background:linear-gradient(180deg,#fff,#ffd7d7);position:relative;box-shadow:0 2px 6px rgba(0,0,0,0.12);display:flex;align-items:flex-start;justify-content:center;transform-origin:center bottom;animation: sway 3s ease-in-out infinite;}
+    .candle:nth-child(odd){animation-duration:2.8s}
+    .candle:before{content:"";position:absolute;top:-12px;width:6px;height:12px;background:linear-gradient(180deg,#fffdc2,#ffd166);border-radius:8px 8px 2px 2px;box-shadow:0 1px 4px rgba(0,0,0,0.12);}
+    .flame{width:6px;height:8px;border-radius:50% 50% 50% 50%;position:absolute;top:-20px;background: radial-gradient(circle at 40% 30%, #fff 0%, transparent 30%),linear-gradient(180deg,#ffd93b,#ff7a00);filter: drop-shadow(0 2px 6px rgba(255,150,0,0.5));animation: flicker 0.15s infinite;}
+    @keyframes flicker{0%{transform:translateY(0) scaleY(1)}50%{transform:translateY(1px) scaleY(1.05)}100%{transform:translateY(0) scaleY(1)}}
+    @keyframes sway{0%{transform:rotate(-1deg)}50%{transform:rotate(2deg)}100%{transform:rotate(-1deg)}}
+    .message{margin-top:12px;font-size:1.05rem;background:linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.4));padding:14px;border-radius:12px;}
+    .controls{margin-top:14px;display:flex;gap:12px;flex-wrap:wrap}
+    button{border:0;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;box-shadow:0 6px 14px rgba(0,0,0,0.08);background:linear-gradient(180deg,var(--accent),#ff8b8b);color:white;}
+    button.secondary{background:linear-gradient(180deg,#e6e6e6,#d9d9d9);color:#2b2b2b}
+    #confettiCanvas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;}
+    footer{margin-top:18px;font-size:0.9rem;color:#666;text-align:center}
+    @media (max-width:720px){.content{flex-direction:column-reverse}.balloon svg{width:56px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="main" aria-labelledby="title">
+      <canvas id="confettiCanvas"></canvas>
+
+      <!-- Globos decorativos -->
+      <div class="balloons" aria-hidden="true">
+        <!-- globo rojo -->
+        <div class="balloon">
+          <svg viewBox="0 0 64 96" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="32" cy="32" rx="24" ry="28" fill="#ff6b6b"/>
+            <path d="M30 60 L36 74 L28 74 Z" fill="#c44"/>
+            <line x1="32" y1="60" x2="32" y2="86" stroke="#d7d7d7" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Encabezado -->
+      <header>
+        <div class="title" id="title">
+          <div>🎉 ¡Feliz Cumpleaños! 🎂</div>
+          <small>Que te la pases muy bien en tu dia, te aprecio mucho, tqm💖</small>
+        </div>
+        <div style="margin-left:auto;text-align:right;">
+          <div style="font-weight:700;font-size:0.95rem">Para: <span id="nombre">Rosy</span></div>
+          <div style="color:#8a8a8a;margin-top:6px">Fecha: <span id="fecha"></span></div>
+        </div>
+      </header>
+
+      <!-- Contenido -->
+      <div class="content">
+        <div class="left">
+          <div class="message" id="mensaje">
+            ¡Que tu dia brille tanto como lo haces tu siepre! que cada uno de tus deseo se conviertan en realidad, te mereces todo lo bueno que existe, hoy celebramoslo increible que eres
+			
+         
+          </div>
+          <div class="controls">
+            <button id="singBtn">🎵 ¡Cantar!</button>
+            <audio id="CUMPLEAÑOS" src="jazz-trio.mp3" preload="auto"></audio>
+            <button id="confettiBtn" class="secondary">🎊 Confeti</button>
+            <button id="customBtn" class="secondary"></button>
+          </div>
+        </div>
+        <div class="right">
+          <div class="cake">
+            <div class="tier top"><div class="frost"></div><div class="sprinkles"></div></div>
+            <div class="tier"><div class="frost" style="top:8px"></div><div class="sprinkles"></div></div>
+            <div class="candles"><div class="candle"><div class="flame"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        FELIZ CUMPLEAÑOS ❤️
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('fecha').textContent = new Date().toLocaleDateString();
+    document.getElementById('customBtn').addEventListener('click', () => {
+      const name = prompt('Escribe el nombre:', 'Estiven');
+      if(name) document.getElementById('nombre').textContent = name;
+    });
+    document.getElementById('confettiBtn').addEventListener('click', () => alert('🎊 Confeti activado!'));
+    document.getElementById('singBtn').addEventListener('click', () => {
+      document.getElementById('CUMPLEAÑOS').play();
+    });
+  </script>
+</body>
+</html>
